@@ -15,6 +15,7 @@ class App extends React.Component {
 
   //on click, send ajax post request to localhost/repos
   search(term) {
+    //need to search data from API and save in db
     console.log(`${term} was searched`);
     $.post({
       url: "http://localhost:1128/repos",

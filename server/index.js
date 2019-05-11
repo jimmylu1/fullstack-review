@@ -2,7 +2,7 @@
 const express = require("express");
 let app = express();
 const getRepos = require("../helpers/github.js");
-const db = require("../database/index.js");
+const mongoDb = require("../database/index.js");
 
 let bodyParser = require("body-parser");
 
@@ -16,8 +16,11 @@ app.post("/repos", function(req, res) {
   // save the repo information in the database
   console.log(req.body, "server post works");
   // console.log("SERVER POST WORKS");
+  //save when post to db
   getRepos.getReposByUsername(req.body.term, data => {
-    console.log("WORKING");
+    for (let key in data) {
+      mongoDb.save(data[key]);
+    }
   });
   res.writeHead(200);
   res.end();
