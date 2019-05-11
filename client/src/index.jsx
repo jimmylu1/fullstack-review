@@ -13,11 +13,11 @@ class App extends React.Component {
     this.search = this.search.bind(this);
   }
 
+  //on click, send ajax post request to localhost/repos
   search(term) {
     console.log(`${term} was searched`);
-    $.ajax({
-      method: "POST",
-      url: "/repos",
+    $.post({
+      url: "http://localhost:1128/repos",
       data: { term }
     });
   }
