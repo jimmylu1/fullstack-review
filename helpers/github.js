@@ -14,7 +14,7 @@ let getReposByUsername = (username, callback) => {
       Authorization: `token ${config.TOKEN}`
     }
   };
-  request.get(options, (err, response, body) => {
+  request.get(options, (err, res, body) => {
     if (err) {
       console.log("Error: ", err);
     } else {

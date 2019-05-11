@@ -1,7 +1,8 @@
+//server
 const express = require("express");
 let app = express();
-let getRepos = require("../helpers/github.js");
-let { save } = require("../database/index.js");
+const getRepos = require("../helpers/github.js");
+const db = require("../database/index.js");
 
 let bodyParser = require("body-parser");
 
