@@ -1,6 +1,7 @@
 //db
 const mongoose = require("mongoose");
-const promise = require("bluebird");
+Promise = require("bluebird");
+mongoose.Promise = Promise;
 //need to check promise import
 
 mongoose
@@ -9,10 +10,10 @@ mongoose
   .catch(err => console.log("mongoose not connected"));
 
 let repoSchema = mongoose.Schema({
-  id: { unique: true, type: Number, dropDups: true },
+  id: Number,
+  avatar: String,
   name: String,
-  description: String,
-  forks_count: Number
+  description: String
 });
 
 let Repo = mongoose.model("Repo", repoSchema);
@@ -21,17 +22,34 @@ let Repo = mongoose.model("Repo", repoSchema);
 let save = userObj => {
   let data = {
     id: userObj["id"],
+    avatar: userObj["owner"]["avatar_url"],
     name: userObj["name"],
-    description: userObj["description"],
-    forks_count: userObj["forcks_count"]
+    description: userObj["description"]
   };
 
   const newRepo = new Repo(data);
-  newRepo.save().then(err => {
-    if (err) {
-      console.log(err);
-    }
-  });
+  newRepo
+    .save()
+    .then(success => {
+      console.log("successs");
+    })
+    .catch(err => {
+      if (err) {
+        console.log(err);
+      }
+    });
+};
+
+let sortRepos = cb => {
+  Repo.find()
+    .limit(25)
+    .then(function(data) {
+      cb(null, data);
+    })
+    .catch(err => {
+      console.log("Err in DB: ", err);
+    });
 };
 
 module.exports.save = save;
+module.exports.sortRepos = sortRepos;

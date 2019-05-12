@@ -14,12 +14,13 @@ let getReposByUsername = (username, callback) => {
       Authorization: `token ${config.TOKEN}`
     }
   };
-  request.get(options, (err, res, body) => {
+  request(options, (err, res, body) => {
     if (err) {
       console.log("Error: ", err);
     } else {
       console.log("API WORKING");
       let parsed = JSON.parse(body);
+      // console.log("parsed", parsed);
       callback(parsed);
     }
   });
